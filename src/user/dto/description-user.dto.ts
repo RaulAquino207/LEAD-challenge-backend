@@ -1,3 +1,3 @@
 export class DescriptionDto {
-    description: string
+    description: number
 }

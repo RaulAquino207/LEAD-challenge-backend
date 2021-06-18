@@ -7,7 +7,7 @@ import {
   } from 'typeorm';
   
   @Entity()
-  // @Unique(['email'])
+  @Unique(['email'])
   export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
