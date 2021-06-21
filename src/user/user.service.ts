@@ -30,11 +30,14 @@ export class UserService {
 
         const all = this.userRepository.find();
 
-        for (let key of (await all).values()) {
+        for (let user of (await all).values()) {
           
-          if (key.email_send  == false){
-            this.sendEmail(key.email, key.name);
-            // OnlySent.push(key);
+          if (user.email_send  == false){
+            this.sendEmail(user.email, user.name);
+            // OnlySent.push(user);
+
+            user.email_send = true
+            await this.userRepository.save(user);
           }
         }
 
