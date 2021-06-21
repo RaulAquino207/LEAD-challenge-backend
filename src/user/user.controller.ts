@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
-import { ResultDto } from 'src/dto/result.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DescriptionDto } from './dto/description-user.dto';
 import { ReturnUserDto } from './dto/return-user.dto';
@@ -19,7 +18,7 @@ export class UserController {
         const user = await this.userService.createUser(createUserDto);
         return {
           user,
-          message: 'User registered successfully.',
+          status: true,
         };
       }
 
@@ -28,11 +27,23 @@ export class UserController {
         return this.userService.findAll();
       }
 
+      @Get('list/send')
+      async sendEmails() {
+        return this.userService.sendEmails();
+      }
+
       @Get(':id')
       @ApiParam({ name:"id" })
       async findUserById(@Param('id') id) : Promise<User> {
         const user = await this.userService.findUserById(id);
         return user;
+      }
+
+      @Get('email/:email')
+      @ApiParam({ name:"email" })
+      async findByEmail(@Param('email') email) : Promise<ReturnUserDto>{
+        const result = await this.userService.findByEmail(email);
+        return result;
       }
 
       @Put(':id')

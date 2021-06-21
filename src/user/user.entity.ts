@@ -23,4 +23,7 @@ import {
   
     @Column({ nullable: false, default: true })
     status: boolean;
+
+    @Column({ nullable: false, default: true })
+    email_send: boolean;
   }

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ResultDto } from 'src/dto/result.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DescriptionDto } from './dto/description-user.dto';
+import { ReturnUserDto } from './dto/return-user.dto';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -23,6 +24,23 @@ export class UserService {
         return this.userRepository.find();
       }
 
+      async sendEmails(): Promise<User[]> {
+
+        // let OnlySent : User[];
+
+        const all = this.userRepository.find();
+
+        for (let key of (await all).values()) {
+          
+          if (key.email_send  == false){
+            this.sendEmail(key.email, key.name);
+            // OnlySent.push(key);
+          }
+        }
+
+        return all;
+      }
+
       async findUserById(userId: string): Promise<User> {
         const user = await this.userRepository.findOne(userId, {
           select: ['email', 'name', 'description', 'status']
@@ -35,19 +53,43 @@ export class UserService {
         console.log('trying to send');
         this.sendEmail(user.email, user.name);
 
-        return user;
+        return 
+        ;
+      }
+
+      async findByEmail(email : string) : Promise<ReturnUserDto> {
+        const user = await this.userRepository.findOne(
+          {where:
+            {email: email }
+        }
+        )
+        if(!user){
+          return<ReturnUserDto>{
+            status : false,
+            user
+          }
+        } 
+
+        return<ReturnUserDto>{
+          status : true,
+          user,
+        }
+
       }
 
       async sendEmail(email : string, name : string) : Promise<void> {
         console.log(email);
+
+        const url = 'http://localhost:4200/';
+        
         try {
           await this.sendGrid.send({
             to: email,
             from: 'aquinoraul207@gmail.com',
             subject: "Form NPS ",
-            text: `Hello ${name}, could you answer this form to let us know your satisfaction?`,
-            html: `<strong>Hello ${name}, could you answer this form to let us know your satisfaction?</strong>
-            <a href="https://pbs.twimg.com/profile_images/1081737035772252161/Nmiep0Fh.jpg">SIM</a>`,
+            text: `Olá ${name}, você poderia responder a este formulário para nos informar sobre sua satisfação?`,
+            html: `<strong>Olá ${name}, você poderia responder a este formulário para nos informar sobre sua satisfação?</strong>
+            <a href="${url}">Quero responder>`,
           });
 
           console.log('Email enviado');

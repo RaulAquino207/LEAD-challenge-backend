@@ -15,6 +15,7 @@ export class UserRepository extends Repository<User> {
     user.email = email;
     user.name = name;
     user.status = false;
+    user.email_send = false;
     try {
       await user.save();
       return user;
