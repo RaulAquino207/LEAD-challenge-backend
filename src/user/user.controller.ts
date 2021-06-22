@@ -39,6 +39,11 @@ export class UserController {
         return user;
       }
 
+      @Get('list/descriptions')
+      async getOnlyDescription(){
+        return await this.userService.getOnlyDescription();
+      }
+
       @Get('email/:email')
       @ApiParam({ name:"email" })
       async findByEmail(@Param('email') email) : Promise<ReturnUserDto>{

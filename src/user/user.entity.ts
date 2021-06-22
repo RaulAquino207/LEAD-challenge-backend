@@ -18,8 +18,8 @@ import {
     @Column({ nullable: false, type: 'varchar', length: 200 })
     name: string;
   
-    @Column({ nullable: true, type: 'varchar', length: 30 })
-    description: string;
+    @Column({ nullable: true })
+    description: number;
   
     @Column({ nullable: false, default: true })
     status: boolean;
