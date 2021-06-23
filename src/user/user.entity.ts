@@ -16,6 +16,9 @@ import {
     email: string;
 
     @Column({ nullable: false, type: 'varchar', length: 200 })
+    password: string;
+
+    @Column({ nullable: false, type: 'varchar', length: 200 })
     name: string;
   
     @Column({ nullable: true })
