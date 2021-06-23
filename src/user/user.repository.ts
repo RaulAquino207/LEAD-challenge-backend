@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { TagDto } from './dto/tag-user.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -9,11 +10,12 @@ export class UserRepository extends Repository<User> {
     CreateUserDto: CreateUserDto,
   ): Promise<User> {
     
-    const { email, name } = CreateUserDto;
+    const { email, tag, name } = CreateUserDto;
 
     const user = this.create();
     user.email = email;
     user.name = name;
+    user.tag = tag;
     user.status = false;
     user.email_send = false;
     try {

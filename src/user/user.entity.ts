@@ -5,6 +5,7 @@ import {
     PrimaryGeneratedColumn,
     Column,
   } from 'typeorm';
+import { TagDto } from './dto/tag-user.dto';
   
   @Entity()
   @Unique(['email'])
@@ -12,11 +13,14 @@ import {
     @PrimaryGeneratedColumn('uuid')
     id: string;
   
+    @Column({type: 'enum', enum: TagDto, default: TagDto.DEFAULT})
+    tag: TagDto;
+    
     @Column({ nullable: false, type: 'varchar', length: 200 })
     email: string;
 
-    @Column({ nullable: false, type: 'varchar', length: 200 })
-    password: string;
+    // @Column({ nullable: false, type: 'varchar', length: 200 })
+    // password: string;
 
     @Column({ nullable: false, type: 'varchar', length: 200 })
     name: string;
