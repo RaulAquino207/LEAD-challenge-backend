@@ -19,9 +19,6 @@ import { TagDto } from './dto/tag-user.dto';
     @Column({ nullable: false, type: 'varchar', length: 200 })
     email: string;
 
-    // @Column({ nullable: false, type: 'varchar', length: 200 })
-    // password: string;
-
     @Column({ nullable: false, type: 'varchar', length: 200 })
     name: string;
   
@@ -33,4 +30,11 @@ import { TagDto } from './dto/tag-user.dto';
 
     @Column({ nullable: false, default: true })
     email_send: boolean;
+
+    @Column({ nullable: false, type: 'varchar', length: 200 })
+    password: string;
+
+    @Column({ nullable: false, type: 'varchar', length: 200 })
+    confirmation_password: string;
+
   }

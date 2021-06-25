@@ -11,9 +11,9 @@ export class CreateUserDto {
     @ApiProperty()
     name: string;
 
-    // @ApiProperty()
-    // password: string;
+    @ApiProperty()
+    password: string;
 
-    // @ApiProperty()
-    // confirmation_password: string;
+    @ApiProperty()
+    confirmation_password: string;
   }
