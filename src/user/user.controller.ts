@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Request, Post, Put, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DescriptionDto } from './dto/description-user.dto';
 import { ReturnUserDto } from './dto/return-user.dto';
@@ -56,5 +58,12 @@ export class UserController {
       async userResponse(@Param() data, @Body() description : DescriptionDto) {
         console.log(data);
         return this.userService.userResponse(data.id, description);
+      }
+
+      @UseGuards(LocalAuthGuard)
+      @Post('auth/login')
+      async login(@Request() { user }){
+        console.log();
+        return user;
       }
 }

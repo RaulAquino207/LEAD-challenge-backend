@@ -33,8 +33,4 @@ import { TagDto } from './dto/tag-user.dto';
 
     @Column({ nullable: false, type: 'varchar', length: 200 })
     password: string;
-
-    @Column({ nullable: false, type: 'varchar', length: 200 })
-    confirmation_password: string;
-
   }
