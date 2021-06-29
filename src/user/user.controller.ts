@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Request, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Request, Post, Put, UseGuards, Inject, forwardRef } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DescriptionDto } from './dto/description-user.dto';
@@ -10,7 +12,12 @@ import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-    constructor(private userService: UserService) {}
+    constructor(
+      private userService: UserService,
+
+      @Inject(forwardRef(() => AuthService))
+      private authService: AuthService
+    ) {}
 
     @Post('register')
     @ApiBody({ type: CreateUserDto })
@@ -63,7 +70,12 @@ export class UserController {
       @UseGuards(LocalAuthGuard)
       @Post('auth/login')
       async login(@Request() { user }){
-        console.log();
+        return this.authService.login(user);
+      }
+
+      @UseGuards(JwtAuthGuard)
+      @Get('auth/profile')
+      getProfile(@Request() { user }) {
         return user;
       }
 }
