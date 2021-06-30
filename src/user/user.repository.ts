@@ -10,12 +10,12 @@ export class UserRepository extends Repository<User> {
     CreateUserDto: CreateUserDto,
   ): Promise<any> {
     
-    const { email, tag, name, password, confirmation_password } = CreateUserDto;
+    const { email, role, name, password, confirmation_password } = CreateUserDto;
 
     const user = this.create();
     user.email = email;
     user.name = name;
-    user.tag = tag;
+    user.role = role;
     user.status = false;
     user.email_send = false;
 

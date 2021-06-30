@@ -5,7 +5,7 @@ import {
     PrimaryGeneratedColumn,
     Column,
   } from 'typeorm';
-import { TagDto } from './dto/tag-user.dto';
+import { Role } from './enums/role.enum';
   
   @Entity()
   @Unique(['email'])
@@ -13,8 +13,8 @@ import { TagDto } from './dto/tag-user.dto';
     @PrimaryGeneratedColumn('uuid')
     id: string;
   
-    @Column({type: 'enum', enum: TagDto, default: TagDto.DEFAULT})
-    tag: TagDto;
+    @Column({type: 'enum', enum: Role, default: Role.User})
+    role: Role;
     
     @Column({ nullable: false, type: 'varchar', length: 200 })
     email: string;

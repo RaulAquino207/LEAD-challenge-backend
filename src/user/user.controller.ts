@@ -1,12 +1,14 @@
 import { Body, Controller, Get, Param, Request, Post, Put, UseGuards, Inject, forwardRef } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiBody, ApiParam } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { Roles } from './decorators/roles.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DescriptionDto } from './dto/description-user.dto';
 import { ReturnUserDto } from './dto/return-user.dto';
+import { Role } from './enums/role.enum';
+import { RolesGuard } from './roles.guard';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
@@ -31,6 +33,8 @@ export class UserController {
         };
       }
 
+      @UseGuards(JwtAuthGuard, RolesGuard)
+      @Roles(Role.Admin)
       @Get('list')
       async listUsers() {
         return this.userService.findAll();

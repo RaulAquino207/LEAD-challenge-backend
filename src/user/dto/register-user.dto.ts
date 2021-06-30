@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { TagDto } from "./tag-user.dto";
+import { Role } from "../enums/role.enum";
 
 export class RegisterUserDto {
     @ApiProperty()
     email: string;
 
     @ApiProperty()
-    tag: TagDto;
+    role: Role;
     
     @ApiProperty()
     name: string;

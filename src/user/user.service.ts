@@ -68,10 +68,10 @@ export class UserService {
           throw new NotFoundException('User not found');
         }
         
-        console.log('trying to send');
-        this.sendEmail(user.email, user.name);
+        // console.log('trying to send');
+        // this.sendEmail(user.email, user.name);
         
-        return 
+        return user;
         ;
       }
       
@@ -119,8 +119,6 @@ export class UserService {
         
         
         async userResponse(userId: string, {description} : DescriptionDto) : Promise<ResultDto> {
-          // let response : string;
-
 
         const user = await this.userRepository.findOne(userId);
 
@@ -133,10 +131,7 @@ export class UserService {
           }
         }
 
-        // console.log(response);
-
         user.description = description ? description : user.description;
-        // user.description = response ? response : user.description;
         user.status = true ? true : user.status;
 
         await this.userRepository.save(user);
