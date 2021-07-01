@@ -52,11 +52,15 @@ export class UserController {
         return user;
       }
 
+      @UseGuards(JwtAuthGuard, RolesGuard)
+      @Roles(Role.Admin)
       @Get('list/descriptions')
       async getOnlyDescription(){
         return await this.userService.getOnlyDescription();
       }
 
+      @UseGuards(JwtAuthGuard, RolesGuard)
+      @Roles(Role.Admin, Role.User)
       @Get('email/:email')
       @ApiParam({ name:"email" })
       async findByEmail(@Param('email') email) : Promise<ReturnUserDto>{
